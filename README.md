@@ -1,7 +1,7 @@
 # Microservices Architecture: Orchestrated Saga Pattern
 
 # Architecture
-<img src="/content/Architecture.gif">
+<img src="/content/Architecture.png">
 
 # Technologies
 * Java 17
