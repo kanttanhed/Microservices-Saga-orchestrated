@@ -1,9 +1,10 @@
 # Microservices Architecture: Orchestrated Saga Pattern
-
-# Architecture
+##Summary
+- <a href"#Architecture">Architecture
+## Architecture
 <img src="content/Architecture.png">
 
-# Technologies
+## Technologies
 * Java 17
 * Spring Boot 3
 * Apache Kafka
@@ -14,7 +15,7 @@
 * docker-compose
 * Redpanda Console
 
-# Tools used
+## Tools used
 * IntelliJ IDEA Community Edition
 * Docker
 * Gradle
