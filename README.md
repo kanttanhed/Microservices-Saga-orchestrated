@@ -1,6 +1,10 @@
 # Microservices Architecture: Orchestrated Saga Pattern
-##Summary
-- <a href"#Architecture">Architecture
+## Summary
+- <a href="#Architecture">Architecture
+- <a href="#Technologies">Technologies
+- <a href="#Tools used">Tools used
+
+
 ## Architecture
 <img src="content/Architecture.png">
 
