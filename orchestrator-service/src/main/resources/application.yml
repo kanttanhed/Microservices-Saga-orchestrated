@@ -1,2 +1,17 @@
 server:
   port: 8080
+
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
+    topic:
+      teste: teste
+    consumer:
+      group-id: orchestrator-group
+      auto-offset-reset: latest
+
+logging:
+  level:
+    org:
+      apache:
+        kafka: OFF
