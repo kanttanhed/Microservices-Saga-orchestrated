@@ -5,10 +5,9 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BROKER:localhost:9092}
     topic:
-      payment-success: payment-success
-      payment-fail: payment-fail
+      teste: teste
     consumer:
-      group-id: payment/-group
+      group-id: payment-group
       auto-offset-reset: latest
 
   datasource:
