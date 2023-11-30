@@ -1,11 +1,11 @@
-package br.com.microservices.orchestrated.orchestratorservice;
+package br.com.microservices.orchestrated.orchestratorservice.core.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Etopics {
+public enum ETopics {
 
     START_SAGA("start-saga"),
     BASE_ORCHESTRATOR("orchestrator"),

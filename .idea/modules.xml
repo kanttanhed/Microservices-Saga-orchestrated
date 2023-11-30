@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Microservices-Saga-orchestrated.iml" filepath="$PROJECT_DIR$/.idea/Microservices-Saga-orchestrated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Microservices-Saga-orchestrated.order-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Microservices-Saga-orchestrated.order-service.main.iml" />
     </modules>
   </component>
 </project>
