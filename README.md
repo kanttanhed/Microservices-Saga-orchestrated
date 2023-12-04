@@ -2,6 +2,7 @@
 
 - [Proposed Architecture](#ProposedArchitecture)
 - [Technologies](#Technologies)
+- [Tools Used](#Toolsused)
   
 # Proposed Architecture
 
@@ -43,3 +44,5 @@ All architecture services will be uploaded through the docker-compose.yml file.
 * IntelliJ IDEA Community Edition
 * Docker
 * Gradle
+  
+[Voltar ao sumário](#Sumário)
