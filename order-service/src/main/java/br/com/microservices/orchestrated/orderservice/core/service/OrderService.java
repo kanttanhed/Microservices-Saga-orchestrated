@@ -29,7 +29,7 @@ public class OrderService {
                 .builder()
                 .products(orderRequest.getProducts())
                 .createdAt(LocalDateTime.now())
-                .transactionalId(
+                    .transactionId(
                         String.format(TRANSACTION_ID_PATTERN, Instant.now().toEpochMilli(), UUID.randomUUID()))
                 .build();
         repository.save(order);
@@ -41,7 +41,7 @@ public class OrderService {
         var event = Event
                 .builder()
                 .orderId(order.getId())
-                .transactionId(order.getTransactionalId())
+                    .transactionId(order.getTransactionId())
                 .payload(order)
                 .createdAt(LocalDateTime.now())
                 .build();
