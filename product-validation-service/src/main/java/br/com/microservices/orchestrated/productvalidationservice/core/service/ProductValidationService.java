@@ -43,7 +43,25 @@ public class ProductValidationService {
         kafkaProducer.sendEvent(jsonUtil.toJson(eventDto));
     }
 
+    private void validateProductsInformed(EventDto eventDto) {
+        if (ObjectUtils.isEmpty(eventDto.getPayload()) || ObjectUtils.isEmpty(eventDto.getPayload().getProducts())) {
+            throw new ValidationException("Product list is empty!");
+        }
+        if (ObjectUtils.isEmpty(eventDto.getPayload().getId()) || ObjectUtils.isEmpty(eventDto.getTransactionId())) {
+            throw new ValidationException("OrderID and TransactionID must be informed!");
+        }
+    }
 
-    
+    private void checkCurrentValidation(EventDto eventDto) {
+        validateProductsInformed(eventDto);
+        if (validationRepository.existsByOrderIdAndTransactionId(
+                eventDto.getOrderId(), eventDto.getTransactionId())) {
+            throw new ValidationException("There's another transactionId for this validation.");
+        }
+        eventDto.getPayload().getProducts().forEach(product -> {
+            validateProductInformed(product);
+            validateExistingProduct(product.getProduct().getCode());
+        });
+    }
 
 }
