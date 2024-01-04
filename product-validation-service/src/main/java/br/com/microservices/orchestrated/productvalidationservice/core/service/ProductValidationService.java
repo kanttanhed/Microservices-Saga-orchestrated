@@ -86,4 +86,20 @@ public class ProductValidationService {
         validationRepository.save(validation);
     }
 
+    private void handleSuccess(EventDto event) {
+        event.setStatus(SUCCESS);
+        event.setSource(CURRENT_SOURCE);
+        addHistory(event, "Products are validated successfully!");
+    }
+
+    private void addHistory(EventDto event, String message) {
+        var history = HistoryDto
+                .builder()
+                .source(event.getSource())
+                .status(event.getStatus())
+                .message(message)
+                .createdAt(LocalDateTime.now())
+                .build();
+        event.addToHistory(history);
+    }
 }
