@@ -70,4 +70,20 @@ public class ProductValidationService {
         }
     }
 
+    private void validateExistingProduct(String code) {
+        if (!productRepository.existsByCode(code)) {
+            throw new ValidationException("Product does not exists in database!");
+        }
+    }
+
+    private void createValidation(EventDto event, boolean success) {
+        var validation = Validation
+                .builder()
+                .orderId(event.getPayload().getId())
+                .transactionId(event.getTransactionId())
+                .success(success)
+                .build();
+        validationRepository.save(validation);
+    }
+
 }
