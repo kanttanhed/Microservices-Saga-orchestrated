@@ -64,4 +64,10 @@ public class ProductValidationService {
         });
     }
 
+    private void validateProductInformed(OrderProductsDto product) {
+        if (ObjectUtils.isEmpty(product.getProduct()) || ObjectUtils.isEmpty(product.getProduct().getCode())) {
+            throw new ValidationException("Product must be informed!");
+        }
+    }
+
 }
