@@ -102,4 +102,10 @@ public class ProductValidationService {
                 .build();
         event.addToHistory(history);
     }
+
+    private void handleFailCurrentNotExecuted(EventDto event, String message) {
+        event.setStatus(ROLLBACK_PENDING);
+        event.setSource(CURRENT_SOURCE);
+        addHistory(event, "Fail to validate products: ".concat(message));
+    }
 }
