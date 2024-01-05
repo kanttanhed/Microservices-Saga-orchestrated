@@ -16,8 +16,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 
-import static br.com.microservices.orchestrated.productvalidationservice.core.enums.ESagaStatus.ROLLBACK_PENDING;
-import static br.com.microservices.orchestrated.productvalidationservice.core.enums.ESagaStatus.SUCCESS;
+import static br.com.microservices.orchestrated.productvalidationservice.core.enums.ESagaStatus.*;
 
 @Slf4j
 @Service
@@ -107,5 +106,23 @@ public class ProductValidationService {
         event.setStatus(ROLLBACK_PENDING);
         event.setSource(CURRENT_SOURCE);
         addHistory(event, "Fail to validate products: ".concat(message));
+    }
+
+    public void rollbackEvent(EventDto event) {
+        changeValidationToFail(event);
+        event.setStatus(FAIL);
+        event.setSource(CURRENT_SOURCE);
+        addHistory(event, "Rollback executed on product validation!");
+        kafkaProducer.sendEvent(jsonUtil.toJson(event));
+    }
+
+    private void changeValidationToFail(EventDto event) {
+        validationRepository
+                .findByOrderIdAndTransactionId(event.getOrderId(), event.getTransactionId())
+                .ifPresentOrElse(validation -> {
+                            validation.setSuccess(false);
+                            validationRepository.save(validation);
+                        },
+                        () -> createValidation(event, false));
     }
 }
