@@ -2,7 +2,9 @@ package br.com.microservices.orchestrated.paymentservice.core.service;
 
 import br.com.microservices.orchestrated.paymentservice.config.exception.ValidationException;
 import br.com.microservices.orchestrated.paymentservice.core.dto.EventDto;
+import br.com.microservices.orchestrated.paymentservice.core.dto.HistoryDto;
 import br.com.microservices.orchestrated.paymentservice.core.dto.OrderProductsDto;
+import br.com.microservices.orchestrated.paymentservice.core.enums.EPaymentStatus;
 import br.com.microservices.orchestrated.paymentservice.core.model.Payment;
 import br.com.microservices.orchestrated.paymentservice.core.producer.KafkaProducer;
 import br.com.microservices.orchestrated.paymentservice.core.repository.PaymentRepository;
@@ -10,6 +12,10 @@ import br.com.microservices.orchestrated.paymentservice.core.utils.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+import static br.com.microservices.orchestrated.paymentservice.core.enums.ESagaStatus.SUCCESS;
 
 @Slf4j
 @Service
@@ -28,7 +34,7 @@ public class PaymentService {
         try {
             checkCurrentValidation(eventDto);
             createPendingPayment(eventDto);
-
+            handleSuccess(eventDto);
         } catch (Exception ex) {
             log.error("Error trying to make payment: ", ex);
         }
@@ -76,6 +82,33 @@ public class PaymentService {
     private void setEventAmountItems(EventDto event, Payment payment) {
         event.getPayload().setTotalAmount(payment.getTotalAmount());
         event.getPayload().setTotalItems(payment.getTotalItems());
+    }
+
+    private void validateAmount(double amount) {
+        if (amount < MIN_VALUE_AMOUNT) {
+            throw new ValidationException("The minimal amount available is ".concat(String.valueOf(MIN_VALUE_AMOUNT)));
+        }
+    }
+
+    private void changePaymentToSuccess(Payment payment) {
+        payment.setStatus(EPaymentStatus.SUCCESS);
+        save(payment);
+    }
+    private void handleSuccess(EventDto eventDto) {
+        eventDto.setStatus(SUCCESS);
+        eventDto.setSource(CURRENT_SOURCE);
+        addHistory(eventDto, "Payment realized successfully!");
+    }
+
+    private void addHistory(EventDto eventDto, String message) {
+        var history = HistoryDto
+                .builder()
+                .source(eventDto.getSource())
+                .status(eventDto.getStatus())
+                .message(message)
+                .createdAt(LocalDateTime.now())
+                .build();
+        eventDto.addToHistory(history);
     }
 
     private void save(Payment payment) {
