@@ -32,7 +32,7 @@ public class PaymentService {
 
     public void realizePayment(EventDto eventDto) {
         try {
-Add            checkCurrentValidation(eventDto); // Check for existing transactions
+            checkCurrentValidation(eventDto); // Check for existing transactions
             createPendingPayment(eventDto); // Create a pending payment entry
             var payment = findByOrderIdAndTransactionId(eventDto); // Find the payment by order ID and transaction ID
             validateAmount(payment.getTotalAmount()); // Validate the total amount of the payment
