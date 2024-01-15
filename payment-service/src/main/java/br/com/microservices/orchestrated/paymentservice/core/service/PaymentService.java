@@ -32,25 +32,27 @@ public class PaymentService {
 
     public void realizePayment(EventDto eventDto) {
         try {
-            checkCurrentValidation(eventDto);
-            createPendingPayment(eventDto);
-            var payment = findByOrderIdAndTransactionId(eventDto);
-            validateAmount(payment.getTotalAmount());
-            changePaymentToSuccess(payment);
-            handleSuccess(eventDto);
+Add            checkCurrentValidation(eventDto); // Check for existing transactions
+            createPendingPayment(eventDto); // Create a pending payment entry
+            var payment = findByOrderIdAndTransactionId(eventDto); // Find the payment by order ID and transaction ID
+            validateAmount(payment.getTotalAmount()); // Validate the total amount of the payment
+            changePaymentToSuccess(payment); // Update the payment status to success
+            handleSuccess(eventDto); // Handle successful payment
         } catch (Exception ex) {
             log.error("Error trying to make payment: ", ex);
             handleFailCurrentNotExecuted(eventDto, ex.getMessage());
         }
-        producer.sendEvent(jsonUtil.toJson(eventDto));
+        producer.sendEvent(jsonUtil.toJson(eventDto)); // Send event notification
     }
 
+    // Check if a payment already exists with the given order ID and transaction ID
     private void checkCurrentValidation(EventDto eventDto) {
         if (paymentRepository.existsByOrderIdAndTransactionId(eventDto.getPayload().getId(), eventDto.getTransactionId())) {
             throw new ValidationException("There's another transactionId for this validation.");
         }
     }
 
+    // Create a new pending payment
     private void createPendingPayment(EventDto eventDto) {
         var totalAmount = calculateAmount(eventDto);
         var totalItems = calculateTotalItems(eventDto);
@@ -61,10 +63,11 @@ public class PaymentService {
                 .totalAmount(totalAmount)
                 .totalItems(totalItems)
                 .build();
-        save(payment);
-        setEventAmountItems(eventDto, payment);
+        save(payment); // Save the payment
+        setEventAmountItems(eventDto, payment); // Set event amount and items
     }
 
+    // Calculates the total amount of the payment
     private double calculateAmount(EventDto eventDto) {
         return eventDto
                 .getPayload()
