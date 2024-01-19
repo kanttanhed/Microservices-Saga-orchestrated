@@ -39,6 +39,7 @@ public class InventoryService {
             handleSuccess(eventDto);
         } catch (Exception ex) {
             log.error("Error trying to update inventory: ", ex);
+            handleFailCurrentNotExecuted(eventDto, ex.getMessage());
         }
         producer.sendEvent(jsonUtil.toJson(eventDto));
     }
@@ -105,6 +106,36 @@ public class InventoryService {
                 .createdAt(LocalDateTime.now())
                 .build();
         eventDto.addToHistory(history);
+    }
+
+    private void handleFailCurrentNotExecuted(EventDto eventDto, String message) {
+        eventDto.setStatus(ROLLBACK_PENDING);
+        eventDto.setSource(CURRENT_SOURCE);
+        addHistory(eventDto, "Fail to update inventory: ".concat(message));
+    }
+
+    public void rollbackInventory(EventDto eventDto) {
+        eventDto.setStatus(FAIL);
+        eventDto.setSource(CURRENT_SOURCE);
+        try {
+            returnInventoryToPreviousValues(eventDto);
+            addHistory(eventDto, "Rollback executed for inventory!");
+        } catch (Exception ex) {
+            addHistory(eventDto, "Rollback not executed for inventory: ".concat(ex.getMessage()));
+        }
+        producer.sendEvent(jsonUtil.toJson(eventDto));
+    }
+
+    private void returnInventoryToPreviousValues(EventDto eventDto) {
+        orderInventoryRepository
+                .findByOrderIdAndTransactionId(eventDto.getPayload().getId(), eventDto.getTransactionId())
+                .forEach(orderInventory -> {
+                    var inventory = orderInventory.getInventory();
+                    inventory.setAvailable(orderInventory.getOldQuantity());
+                    inventoryRepository.save(inventory);
+                    log.info("Restored inventory for order {}: from {} to {}",
+                            eventDto.getPayload().getId(), orderInventory.getNewQuantity(), inventory.getAvailable());
+                });
     }
 
     private Inventory findInventoryByProductCode(String productCode) {
