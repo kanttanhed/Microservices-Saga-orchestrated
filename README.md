@@ -1,4 +1,6 @@
-# Sumário
+# Status the project: in progress
+
+# Summary 
 
 - [Proposed Architecture](#ProposedArchitecture)
 - [Technologies](#Technologies)
