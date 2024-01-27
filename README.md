@@ -39,7 +39,7 @@ All architecture services will be uploaded through the docker-compose.yml file.
 * docker-compose
 * Redpanda Console
   
-[Voltar ao sumário](#Sumário)
+[Return to summary](#Summary)
 
 # Tools used
 
@@ -51,37 +51,37 @@ All architecture services will be uploaded through the docker-compose.yml file.
 
 # Execução do projeto
 
-Há várias maneiras de executar os projetos:
+There are several ways to execute projects:
 
-Executando tudo via docker-compose
-Executando tudo via script de automação que eu disponibilizei (build.py)
-Executando apenas os serviços de bancos de dados e message broker (Kafka) separadamente
-Executando as aplicações manualmente via CLI (java -jar ou gradle bootRun ou via IntelliJ)
-Para rodar as aplicações, será necessário ter instalado:
+Running everything via docker-compose
+Running everything via the automation script I made available (build.py)
+Running only the database and message broker (Kafka) services separately
+Running applications manually via CLI (java -jar or gradle bootRun or via IntelliJ)
+To run the applications, you will need to have installed:
 
 Docker
 Java 17
-Gradle 7.6 ou superior
+Gradle 7.6 or higher
 
-## 01 - Execução geral via docker-compose
+## 01 - General execution via docker-compose
 
-Basta executar o comando no diretório raiz do repositório:
+Just run the command in the repository's root directory:
 
 docker-compose up --build -d
 
-Obs.: para rodar tudo desta maneira, é necessário realizar o build das 5 aplicações, veja nos passos abaixo sobre como fazer isto.
+Note: to run everything this way, it is necessary to build the 5 applications, see the steps below on how to do this.
 
-## 02 - Execução geral via automação com script em Python
+## 02 - General execution with Python script
 
-Basta executar o arquivo build.py. Para isto, é necessário ter o Python 3 instalado.
+Just run the build.py file. To do this, you need to have Python 3 installed.
 
-Para executar, basta apenas executar o seguinte comando no diretório raiz do repositório:
+To execute, simply run the following command in the repository's root directory:
 
 python build.py
 
-Será realizado o build de todas as aplicações, removidos todos os containers e em sequência, será rodado o docker-compose.
+All applications will be built, all containers will be removed and, subsequently, docker-compose will be run.
 
-## 03 - Executando os serviços de bancos de dados e Message Broker
+## 03 - Running database and message broker services
 
 Para que seja possível executar os serviços de bancos de dados e Message Broker, como MongoDB, PostgreSQL e Apache Kafka, basta ir no diretório raiz do repositório, onde encontra-se o arquivo docker-compose.yml e executar o comando:
 
@@ -97,7 +97,7 @@ Ou então:
 
 docker stop ($docker ps -aq) docker container prune -f
 
-## 04 - Executando manualmente via CLI
+## 04 - Running manually via CLI
 Voltar ao nível anterior
 
 Antes da execução do projeto, realize o build da aplicação indo no diretório raiz e executando o comando:
@@ -112,4 +112,29 @@ Ou então, entrar no diretório: build/libs e executar o comando:
 
 java -jar nome_do_jar.jar
 
-[Voltar ao sumário](#Sumário)
+[Return to summary](#Summary)
+
+# Project execution
+
+To access the applications and place an order, simply access the URL:
+
+http://localhost:3000/swagger-ui.html
+
+You will reach this page:
+
+
+Applications will run on the following ports:
+
+- Order-Service: 3000
+- Orchestrator-Service: 8080
+- Product-Validation-Service: 8090
+- Payment-Service: 8091
+- Inventory-Service: 8092
+- Apache Kafka: 9092
+- Redpanda Console: 8081
+- PostgreSQL (Product-DB): 5432
+- PostgreSQL (Payment-DB): 5433
+- PostgreSQL (Inventory-DB): 5434
+- MongoDB (Order-DB): 27017
+
+[Return to summary](#Summary)
