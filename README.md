@@ -1,10 +1,38 @@
-# Status the project: in progress
+# Microservices Architecture Project: Orchestrated Saga Pattern
+## Status the project: in progress
+
+Here, you'll find an exciting project I'm currently working on, focused on Microservices Architecture, specifically employing the Orchestrated Saga Pattern. This project is a testament to modern software development practices, aimed at demonstrating a resilient and scalable architecture for distributed systems.
+
+This project showcases a proposed architecture for managing complex transactions and workflows in a microservices environment. It's designed to handle the intricacies of distributed data consistency and service coordination without compromising system resilience.
+
+Feel free to explore the repository for a more detailed look at the code, architecture diagrams, and documentation. This project is a live example of applying theoretical concepts to solve real-world software architecture challenges. Whether you're here for inspiration, collaboration, or learning, I'm glad you stopped by!
 
 # Summary 
 
 - [Proposed Architecture](#ProposedArchitecture)
 - [Technologies](#Technologies)
 - [Tools Used](#Toolsused)
+
+# Technologies
+* Java 17
+* Spring Boot 3
+* Apache Kafka
+* API REST
+* PostgreSQL
+* MongoDB
+* Docker
+* docker-compose
+* Redpanda Console
+  
+[Return to summary](#Summary)
+
+# Tools used
+
+* IntelliJ IDEA Community Edition
+* Docker
+* Gradle
+  
+[Voltar ao sumário](#Sumário)
   
 # Proposed Architecture
 
@@ -28,26 +56,6 @@ In our architecture, we will have 5 services:
 
 All architecture services will be uploaded through the docker-compose.yml file.
 
-# Technologies
-* Java 17
-* Spring Boot 3
-* Apache Kafka
-* API REST
-* PostgreSQL
-* MongoDB
-* Docker
-* docker-compose
-* Redpanda Console
-  
-[Return to summary](#Summary)
-
-# Tools used
-
-* IntelliJ IDEA Community Edition
-* Docker
-* Gradle
-  
-[Voltar ao sumário](#Sumário)
 
 # Execução do projeto
 
