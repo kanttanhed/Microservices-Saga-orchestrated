@@ -57,7 +57,7 @@ In our architecture, we will have 5 services:
 All architecture services will be uploaded through the docker-compose.yml file.
 
 
-# Execução do projeto
+# Project execution
 
 There are several ways to execute projects:
 
@@ -146,3 +146,16 @@ Applications will run on the following ports:
 - MongoDB (Order-DB): 27017
 
 [Return to summary](#Summary)
+
+# API Data
+
+It is necessary to know the payload for sending the saga flow, as well as the registered products and their quantities.
+
+## Registered products and their stock
+
+There are 3 initial products registered in the product-validation-service service and their quantities available in inventory-service:
+
+COMIC_BOOKS (4 in stock)
+BOOKS (2 in stock)
+MOVIES (5 in stock)
+MUSIC (9 in stock)
