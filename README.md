@@ -159,3 +159,22 @@ COMIC_BOOKS (4 in stock)
 BOOKS (2 in stock)
 MOVIES (5 in stock)
 MUSIC (9 in stock)
+
+
+## Endpoint para iniciar a saga:
+
+POST http://localhost:3000/api/order
+
+Payload:
+
+Resposta:
+
+## Endpoint para visualizar a saga:
+
+É possível recuperar os dados da saga pelo orderId ou pelo transactionId, o resultado será o mesmo:
+
+GET http://localhost:3000/api/event?orderId=64429e987a8b646915b3735f
+
+GET http://localhost:3000/api/event?transactionId=1682087576536_99d2ca6c-f074-41a6-92e0-21700148b519
+
+Resposta:
