@@ -91,17 +91,17 @@ All applications will be built, all containers will be removed and, subsequently
 
 ## 03 - Running database and message broker services
 
-Para que seja possível executar os serviços de bancos de dados e Message Broker, como MongoDB, PostgreSQL e Apache Kafka, basta ir no diretório raiz do repositório, onde encontra-se o arquivo docker-compose.yml e executar o comando:
+To be able to run database and Message Broker services, such as MongoDB, PostgreSQL and Apache Kafka, simply go to the root directory of the repository, where the docker-compose.yml file is located, and execute the command:
 
 docker-compose up --build -d order-db kafka product-db payment-db inventory-db
 
-Como queremos rodar apenas os serviços de bancos de dados e Message Broker, é necessário informá-los no comando do docker-compose, caso contrário, as aplicações irão subir também.
+As we want to run only the database and Message Broker services, it is necessary to inform them in the docker-compose command, otherwise the applications will run too.
 
-Para parar todos os containers, basta rodar:
+To stop all containers, just run:
 
 docker-compose down
 
-Ou então:
+Or else:
 
 docker stop ($docker ps -aq) docker container prune -f
 
