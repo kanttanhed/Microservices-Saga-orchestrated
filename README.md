@@ -161,7 +161,7 @@ MOVIES (5 in stock)
 MUSIC (9 in stock)
 
 
-## Endpoint para iniciar a saga:
+## Endpoint to start the saga:
 
 POST http://localhost:3000/api/order
 
@@ -169,9 +169,8 @@ Payload:
 
 Resposta:
 
-## Endpoint para visualizar a saga:
-
-É possível recuperar os dados da saga pelo orderId ou pelo transactionId, o resultado será o mesmo:
+## Endpoint to view the saga:
+It is possible to retrieve the saga data using orderId or transactionId, the result will be the same:
 
 GET http://localhost:3000/api/event?orderId=64429e987a8b646915b3735f
 
